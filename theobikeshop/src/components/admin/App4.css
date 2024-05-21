@@ -59,3 +59,41 @@
 .form p a {
     color: #007bff;
 }
+
+/* App.css */
+.App {
+    text-align: center;
+  }
+  
+  .dashboard {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+  }
+  
+  .sidebar {
+    width: 200px;
+    background-color: #333;
+    color: white;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar li {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .sidebar li:hover {
+    background-color: #555;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    padding: 20px;
+    text-align: left;
+  }
+  

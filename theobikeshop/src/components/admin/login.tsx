@@ -1,43 +1,35 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import './App4.css';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [adminusername, setUsername] = useState("");
+  const [adminpassword, setPassword] = useState("");
   const [error, setError] = useState('');
-  const [redirectToProducts, setRedirectToProducts] = useState(false);
-
-  // Retrieve username and password from local storage
-  const storedUsername = localStorage.getItem("username");
-  const storedPassword = localStorage.getItem("password");
+  const navigate = useNavigate(); // Use useNavigate instead of useHistory
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Assuming your user authentication logic here
-    if (username === "admin" && password === "password") { // Example authentication logic
-      localStorage.setItem("authenticated", "true");
-      alert("Successfully Logged in.");
-      setRedirectToProducts(true);
+    if (adminusername === "admin" && adminpassword === "password") { // Example authentication logic
+      // Redirect to dashboard after successful login
+      navigate("/dashboard"); // Use navigate instead of history.push
     } else {
       setError('Invalid username or password.');
     }
   };
 
-  if (redirectToProducts) {
-    return <Navigate to="/Home2" />;
-  }
-
   return (
     <div className="banner2">
       <div className="form-container">
-        <h2 className="form-title"> <b>LOGIN</b></h2>
+        <h2 className="form-title"> <b>ADMIN LOGIN</b></h2>
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <form onSubmit={handleSubmit}>
           <input
             type="text"
             name="Username"
-            value={username}
+            value={adminusername}
             placeholder="Enter Username"
             onChange={(e) => setUsername(e.target.value)}
             className="form-input"
@@ -49,10 +41,10 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             className="form-input"
           />
-          <input type="submit" value="Login" className="form-input btn btn-secondary" />
+          <button type="submit" className='form-input btn btn-secondary'>Login</button> {/* Use type="submit" for login button */}
         </form>
         <p>
-          Don't have an account? <Link to="/Signup">Sign Up</Link>
+          Don't have an account? <Link to="/AdminSignup">Sign Up</Link>
         </p>
       </div>
     </div>
@@ -60,3 +52,4 @@ const Login = () => {
 };
 
 export default Login;
+
