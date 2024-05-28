@@ -1,6 +1,6 @@
 
 import './App.css';
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Login from "./components/Login.tsx";
@@ -15,10 +15,16 @@ import RBProducts from "./components/rbproducts2.tsx";
 import MBProducts from "./components/mbproducts2.tsx";
 import AddToCart from "./components/addtocart.tsx";
 import Cart from "./components/cart.tsx";
-import CheckOut from "./components/checkout.tsx";
 import Home2 from "./components/Home2.tsx";
+import Checkout from "./components/Checkout.tsx";
 
 function App() {
+  const [cart, setCart] = useState<{ item: string; quantity: number; price: number }[]>([]);
+
+  const updateCart = (newCart: { item: string; quantity: number; price: number }[]) => {
+    setCart(newCart);
+  };
+
   return (
     <Router>
       <div className='App'>
@@ -46,7 +52,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/products" element={<Products />} />
-          <Route path="/gbproducts" element={<GBProducts />} />
+          <Route path="/gbproducts" element={<GBProducts cart={cart} setCart={setCart} />} />
           <Route path="/rbproducts" element={<RBProducts />} />
           <Route path="/mbproducts" element={<MBProducts />} />
 
@@ -56,9 +62,9 @@ function App() {
 
           
           <Route path="/addtocart" element={<AddToCart />} />
-          <Route path="/cart" element={<Cart/>} />
-         
-          <Route path="/checkout" element={<CheckOut/>} />
+      
+<Route path="/cart" element={<Cart cartItems={cart} updateCart={updateCart} />} />
+          <Route path="/checkout" element={<Checkout cartItems={cart} updateCart={updateCart} />} />
         </Routes>
       </div>
     </Router>

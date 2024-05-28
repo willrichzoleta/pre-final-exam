@@ -1,21 +1,24 @@
 import React from 'react';
 import './cart.css';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   cartItems: { item: string; quantity: number; price: number }[];
   updateCart: (cart: { item: string; quantity: number; price: number }[]) => void;
-  history: any; // Ensure that history is included in props
-
 };
 
 const Cart: React.FC<Props> = ({ cartItems, updateCart }) => {
+  const navigate = useNavigate();
+
   const decreaseQuantity = (index: number) => {
-    const updatedCartItems = cartItems.map((item, i) => {
-      if (i === index) {
-        return { ...item, quantity: item.quantity - 1 };
-      }
-      return item;
-    }).filter(item => item.quantity > 0);
+    const updatedCartItems = cartItems
+      .map((item, i) => {
+        if (i === index) {
+          return { ...item, quantity: item.quantity - 1 };
+        }
+        return item;
+      })
+      .filter((item) => item.quantity > 0);
 
     updateCart(updatedCartItems);
   };
@@ -29,6 +32,9 @@ const Cart: React.FC<Props> = ({ cartItems, updateCart }) => {
     return quantity * price;
   };
 
+  const handleCheckout = () => {
+    navigate('/checkout');
+  };
 
   return (
     <div>
@@ -42,9 +48,8 @@ const Cart: React.FC<Props> = ({ cartItems, updateCart }) => {
           </li>
         ))}
       </ul>
-      
     </div>
   );
 };
 
-export default (Cart);
+export default Cart;
